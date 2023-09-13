@@ -1,0 +1,14 @@
+environment
+
+.venv
+env/
+venv/
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.idea/
+build/
+
+pg_data
