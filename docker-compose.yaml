@@ -5,21 +5,22 @@ services:
   db:
     image: postgres
     container_name: db
-#    environment:
-#      - POSTGRES_PASSWORD=mysecretpassword
-#      - PGDATA=/var/lib/postgresql/data/pgdata
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=postgres_docker
     volumes:
       - pg_data:/var/lib/postgresql/data/pgdata
     env_file:
       - .env
     ports:
-      - '5432:5432'
+      - '54321:54321'
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
-
+#
   redis:
     image: redis
     container_name: redis_cont
@@ -37,7 +38,7 @@ services:
     build: .
     container_name: app_cont
     tty: true
-    command: python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000
+    command: sh -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
     depends_on:
